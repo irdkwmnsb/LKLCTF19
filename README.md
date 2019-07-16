@@ -1,8 +1,49 @@
 # LKLCTF19
 The plan:  
 https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/edit#  
-# Categories:
 
+List:
+1. welcome-web
+2. welcome-crypto
+3. welcome-admin
+4. welcome-ppc
+5. welcome-forensics
+6. welcome-stego
+7. welcome-recon
+8. welcome-misc
+9. web-ebanking (3 part)
+10. web-fussy
+11. crypto-xor
+12. crypto-rsa
+13. crypto-decypher 
+14. admin-webcam
+15. admin-vm
+16. ppc-atm
+16. ppc-database
+17. ppc-primes
+18. ppc-mining
+19. ppc-dijkstra
+20. for-hijacking
+21. for-dump
+22. for-vm
+22. stego-logo
+23. stego-excel
+24. stego-ringtone
+25. stego-spaces
+26. recon-1
+27. recon-2
+28. recon-3
+29. rev-timemachine
+30. rev-infiniteloop
+31. rev-python
+32. rev-android
+33. misc-hotline
+34. misc-discord
+35. misc-vk
+---
+  
+# Categories:
+welcome, web, crypto, admin, ppc, forensics, stego, recon, misc
 
 ## welcome - 8 на каждую категорию кроме misc
 
@@ -99,8 +140,8 @@ __и ответ обязательно ограничен 5 попытками._
 Основоположником всех крипто алгоритмов является известный математик Лууп Инфинят. ЛКЛБанк использует его алгоритмы в своих продуктах. Вот один из таких продуктов..   
 Таск от Тео, у меня есть код. 
 
-### Ещё один таск на - reverse
-Бла-бла-бла  
+### Python-reversing - reverse
+Таск на реверс питона
 
 ### Have I Got Paid? - reverse
 Прошлый сотрудник банка не хотел работать перед самым отпуском, оставив это приложение перед увольнением (добровольным). Сможете разгадать загадку?  
