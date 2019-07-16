@@ -1,4 +1,6 @@
 # LKLCTF19
+Весь CTF строится вокруг идеи виртуального ограбления банка.  
+  
 The plan:  
 https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/edit#  
 
