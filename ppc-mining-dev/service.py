@@ -124,13 +124,13 @@ async def handle(reader, writer):
 
 
 async def start_server(port):
-    server = await asyncio.start_server(handle, 'localhost', port)
+    server = await asyncio.start_server(handle, '0.0.0.0', port)
     await server.serve_forever()
 
 
 def main():
     port = 9999 if len(sys.argv) < 2 else int(sys.argv[1])
-    logger.info('Starting TCP server on {}:{}', 'localhost', port)
+    logger.info('Starting TCP server on {}:{}', '0.0.0.0', port)
     
     asyncio.run(start_server(port))
 

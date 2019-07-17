@@ -1,0 +1,7 @@
+version: '3'
+services:
+    ppc_mining:
+        build: .
+        ports:
+            # Replace 4001 with desired host port
+            - '9999:4001'
