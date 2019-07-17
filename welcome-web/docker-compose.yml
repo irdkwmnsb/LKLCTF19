@@ -1,0 +1,8 @@
+services:
+  welcome-web:
+    image: gists/lighttpd
+    ports:
+      - "80:8001"
+    volumes:
+      - ./html:/var/www
+    restart: always
