@@ -13,9 +13,9 @@ https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/
 
 ### Начало работы над таском:
 1. Назначить себя в issue таска
-2. Добавить правильные label-ы
-3. **Projects перенести issue в столбец "В разработке"**
-3. На своей ветке разработки добавить папку с названием таска
+2. Добавить правильные label-ы (категория + welcome если надо + file/service)
+3. **В [Projects](https://github.com/irdkwmnsb/LKLCTF19/projects/2) перенести issue в столбец "В разработке"**
+3. На своей ветке разработки добавить папку с названием таска + "-dev"
 4. Checkout в эту ветку
 5. Можно работать
  
