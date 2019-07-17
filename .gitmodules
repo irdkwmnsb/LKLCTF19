@@ -1,0 +1,2 @@
+[submodule "stego-invisible/some-repository"]
+	url = https://github.com/lklbank/some-repository.git
