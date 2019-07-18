@@ -1,0 +1,13 @@
+<html>
+<head>
+
+</head>
+<body>
+    <h1>{{ titles[0] }}</h1>
+    <ul>
+        {% for i in range(6) %}
+        <a href="{{ url_for("page", random=pages[i]) }}">{{ titles[i+1] }}</a><br>
+        {% endfor %}
+    </ul>
+</body>
+</html>
