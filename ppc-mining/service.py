@@ -85,19 +85,26 @@ class InputError(Exception):
     pass
 
 
-def try_convert(a, b):
+def try_func(func, *args, **kwargs):
     try:
-        return b(a)
+        return func(*args, **kwargs), True
     except Exception as e:
-        raise InputError(repr(e)) from e
+        return None, False
 
 
 async def ask(io, b):
-    s = generate_expression.gen_expression(b)
-    await io.write('TASK: {}\n'.format(s).encode('utf-8'))
+    task = None
+    while True:
+        task = generate_expression.gen_expression(b)
+        logger.debug("Generated task: %s" % task)
+        if try_func(eval, task)[1]:
+            break
+    await io.write('TASK: {}\n'.format(task).encode('utf-8'))
     await io.flush()
     result = await io.read_line()
-    v = try_convert(result, int)
+    v, r = try_func(int, result)
+    if not r:
+        raise InputError()
     return v == b
 
 
