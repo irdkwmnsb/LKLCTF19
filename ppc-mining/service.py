@@ -41,7 +41,7 @@ COIN = b'''
        ZmxhZyAgICAgICAg
 '''[1:]
 
-MAX_BUFFER_SIZE = 64 * 1024     # 64 KiB
+MAX_BUFFER_SIZE = 8 * 1024     # 8 KiB
 
 
 class IO(object):
@@ -74,7 +74,7 @@ class IO(object):
             self.buffer += data
             if len(self.buffer) > MAX_BUFFER_SIZE:
                 logger.warning('Potential DoS attack - received string is too large')
-                await self.write('НЕ ДУДОСЬ МЕНЯ!!!'.encode('utf-8'))
+                await self.write('Не пытайся меня сломать. Я не pwn'.encode('utf-8'))
                 raise Exception('User sent a string which was too large')
         idx = self.buffer.index(b'\n')
         ret, self.buffer = self.buffer[:idx].strip(), self.buffer[idx+1:]
@@ -121,6 +121,7 @@ async def handle(reader, writer):
                     else:
                         await io.write(b'Wrong! Mining stopped\n')
                         return
+                logger.info('Peer solved all tasks')
                 await io.write(b'Congrats! Here is your 1 LKLCoin!\n')
                 await io.write(COIN)
                 return
