@@ -1,0 +1,5 @@
+User-Agent: humans
+Disallow: 1018ed-flag.html
+
+User-Agent: *
+Allow: 1018ed-flag.html
