@@ -41,7 +41,7 @@ https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/
 7. welcome-recon
 8. welcome-misc
 9. web-ebanking (3 part)
-10. web-fussy
+10. web-fuzzy
 11. crypto-xor
 12. crypto-rsa
 13. crypto-decypher 
