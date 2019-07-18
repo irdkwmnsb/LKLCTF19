@@ -59,7 +59,7 @@ class IO(object):
         self.writer.close()
     
     async def recv(self, n):
-        return await self.reader.read(n)
+        return await asyncio.wait_for(self.reader.read(n), timeout=5.0)
 
     async def flush(self):
         await self.writer.drain()
@@ -104,23 +104,27 @@ async def ask(io, b):
 
 
 async def handle(reader, writer):
-    logger.info('Connection opened')
-    with IO(reader, writer) as io:
-        try:
-            await io.write(BANNER)
-            for i, b in enumerate(reversed(flag)):
-                if await ask(io, b):
-                    await io.write('Correct! You have mined {} LKLCoins\n'.format((i+1)/len(flag)).encode())
-                else:
-                    await io.write(b'Wrong! Mining stopped\n')
-                    return
-            await io.write(b'Congrats! Here is your 1 LKLCoin!\n')
-            await io.write(COIN)
-            return
-        except (InputError, EOFError) as e:
-            await io.write(b'Invalid input format, mining stopped\n')
-            #await io.write('Ты какую-то хуйню ввёл, переделывай\n'.encode())
-    logger.info('Connection closed')
+    # Лютый говнокод, но вроде работает
+    logger.info('Connection opened from {}', writer.get_extra_info('peername'))
+    try:
+        with IO(reader, writer) as io:
+            try:
+                await io.write(BANNER)
+                for i, b in enumerate(reversed(flag)):
+                    if await ask(io, b):
+                        await io.write('Correct! You have mined {} LKLCoins\n'.format((i+1)/len(flag)).encode())
+                    else:
+                        await io.write(b'Wrong! Mining stopped\n')
+                        return
+                await io.write(b'Congrats! Here is your 1 LKLCoin!\n')
+                await io.write(COIN)
+                return
+            except (InputError, EOFError) as e:
+                await io.write(b'Invalid input format, mining stopped\n')
+            except asyncio.TimeoutError:
+                await io.write(b'Sorry, we don\'t have time to wait so long. Bye\n')
+    finally:
+        logger.info('Connection closed')
 
 
 async def start_server(port):
