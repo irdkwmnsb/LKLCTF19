@@ -28,6 +28,10 @@ https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/
 5. Приступить к другому таску
 
 ## List:
+**НОМЕР ПОРТА В ДОКЕРЕ ЭТО  
+ДЛЯ tcp/raw СЕРВИСОВ 500[НОМЕР ТАСКА В ЭТОМ СПИСКЕ]  
+ДЛЯ http СЕРВИСОВ 80[НОМЕР ТАСКА В ЭТОМ СПИСКЕ]**
+
 1. welcome-web
 2. welcome-crypto
 3. welcome-admin
