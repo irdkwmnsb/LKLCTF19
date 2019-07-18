@@ -21,17 +21,17 @@ def get_bank_account_number():
 
 def get_base():
     return rd.choice([
-        'what you are reading is not a flag',
-        'this is not a flag',
-        'the flag is not here',
+        'what you are reading isn\'t a flag',
+        'this isn\'t a flag',
+        'the flag isn\'t here',
         'no, it is not a flag',
-        'it is not a flag',
+        'it is *not* a flag',
         'no, no flag for you',
-        'the flag has never existed here',
-        'do not even try to find a flag here',
+        'the flag has never existed here...',
+        'do not even try to find a flag here!',
         'wrong way!',
-        'this is exactly the place where there are no flags',
-    ]).replace(' ', '_').lower() + '_########_########'
+        'this is exactly the place where there aren\'t any flags',
+    ]).lower()
 
 TABLE = {
     'e': list('3'),
@@ -42,7 +42,6 @@ TABLE = {
     'l': list('17'),
     'z': list('7'),
     'b': list('6'),
-    '#': list('0123456789abcdef'),
 }
 
 for c in 'qwertyuiopasdfghjklzxcvbnm':
@@ -111,7 +110,8 @@ def main():
             col = rd.randint(100, 999)
             row = rd.randint(100, 99999)
             ws.write(row, col, f'LKLCTF{{{gen_not_a_flag_message()}}}')
-        ws.set_column(0, 5, width=60)
+        ws.set_column(5, 5, width=60)
+        ws.set_column(0, 4, width=25)
 
 
 if __name__ == '__main__':

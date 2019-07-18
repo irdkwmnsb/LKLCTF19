@@ -16,6 +16,7 @@ FLAG='LKLCTF{3XceL_F1Le_i5_n0t_0n1Y_a_T4blE_2be0915a_4810eac0}'
 shopt -s dotglob
 set -x
 
+rm -f 'Transactions-info.xlsx'
 python3 ./gen-helper.py
 
 rm -rf 'tmp'
