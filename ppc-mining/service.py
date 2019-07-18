@@ -26,21 +26,19 @@ Let's go!
 
 
 
-# TODO: replace with base64-encoded hint
+#f"What 50-letter word is not the same backwards? the flag"
 COIN = b'''
-                           
-       ICAgICAgICAgICAg     
-     IC                Ag   
-   IC                    Ag 
-  I    C     A  g  I       C
-  A    g     I C   A       g
-  I    C     Ag    I       C
-  A    g     I H   N       k
-  c    mF3a  2  N  hYiB    z
-   ZX                    R5 
-     Yi                Bl   
-       c2VodCBkYWVSCg==     
- 
+       V2hhdCA1MC1sZXR0
+     ZX                Ig
+   d2                    9y
+  Z    C     B  p  c       y
+  B    u     b 3   Q       g
+  d    G     hl    I       H
+  N    h     b W   U       g
+  Y    mFja  3  d  hcmR    z
+   Py                    B0
+     aG                Ug
+       ZmxhZyAgICAgICAg
 '''[1:]
 
 MAX_BUFFER_SIZE = 64 * 1024     # 64 KiB
