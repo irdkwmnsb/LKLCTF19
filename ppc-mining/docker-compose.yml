@@ -3,5 +3,6 @@ services:
     ppc_mining:
         build: .
         ports:
-            # Replace 4001 with desired host port
-            - '4001:9999'
+            - '50019:9999'
+        volumes:
+            - ./:/ppc

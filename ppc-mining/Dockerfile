@@ -1,4 +1,4 @@
-FROM python
+FROM python:3
 WORKDIR /ppc
 COPY service.py service.py
 COPY generate_expression.py generate_expression.py
