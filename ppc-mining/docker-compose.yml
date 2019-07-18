@@ -4,4 +4,4 @@ services:
         build: .
         ports:
             # Replace 4001 with desired host port
-            - '9999:4001'
+            - '4001:9999'
