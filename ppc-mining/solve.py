@@ -1,14 +1,14 @@
 import nclib
 import sys
+import sys
 
-HOST = '127.0.0.1'
-PORT = 4001
+HOST = sys.argv[1]
+PORT = int(sys.argv[2])
 
 
 def main():
     logfile = open('log.txt', 'wb')
-    nc = nclib.Netcat(connect=(HOST, PORT), verbose=True, log_send=logfile, log_recv=logfile)
-    nc.echo_hex = True
+    nc = nclib.Netcat(connect=(HOST, PORT), log_send=logfile, log_recv=logfile)
 
     flag = []
 
@@ -16,6 +16,7 @@ def main():
         while True:
             line = nc.read_line().decode()
             if line.startswith('TASK:'):
+                print(line.strip())
                 ans = round(eval(line[5:]))
                 flag.append(ans)
                 nc.send(f'{ans}\n'.encode())
