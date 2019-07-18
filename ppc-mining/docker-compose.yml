@@ -1,0 +1,8 @@
+version: '3'
+services:
+    ppc_mining:
+        build: .
+        ports:
+            - '50019:9999'
+        volumes:
+            - ./:/ppc
