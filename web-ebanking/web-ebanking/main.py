@@ -58,6 +58,18 @@ class SignInHandler(tornado.web.RequestHandler):
             self.redirect('/')
 
 
+class ViewUserInfoHandler(tornado.web.RequestHandler):
+    def post(self):
+        username = self.get_argument('username', None)
+        password = self.get_argument('password', '')
+        password_hash = auth.hash_password(password)
+        user = auth.maybe_get_user_by_full_creds(username, password_hash)
+        if user is None:
+            self.render('templates/bad-auth.html')
+        else:
+            self.render('templates/view-user-info.html', user=user)
+
+
 class LogOutHandler(tornado.web.RequestHandler):
     def get(self):
         session_id = self.get_cookie('session_id')
@@ -81,6 +93,7 @@ def main():
             ('/', HomepageHandler),
             ('/log-out', LogOutHandler),
             ('/sign-in', SignInHandler),
+            ('/view-user-info', ViewUserInfoHandler),
             ('/sign-in-form', SimpleHandler, {'filename': 'templates/sign-in-form.html'}),
             ('/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'}),
         ],

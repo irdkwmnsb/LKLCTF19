@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>LKL-Bank - информация о пользователе</title>
+</head>
+
+<body>
+    <div class="w3-bar w3-blue w3-text-white" style="cursor: default">
+        <a class="w3-bar-item w3-hover-indigo w3-button" href="/">Главная</a>
+        <a class="w3-bar-item w3-indigo" disabled>Просмотр информации о пользователе</a>
+        {% if current_user is None %}
+            <a class="w3-bar-item w3-hover-indigo w3-button" href="/sign-in-form">Вход</a>
+            <a
+                class="w3-bar-item w3-grey"
+                disabled
+                style="cursor: not-allowed"
+                title="Регистрация пока не реализована"
+            >
+                Регистрация
+            </a>
+        {% else %}
+            <a class="w3-bar-item w3-indigo" disabled style="cursor: default">
+                Вы {{ current_user.username }}
+            </a>
+            <a class="w3-bar-item w3-hover-indigo w3-button" href="/log-out">Выйти</a>
+        {% end %}
+    </div>
+    <div class="w3-container">
+        <h1>ЛКЛ-Банк — информация о пользователе</h1>
+        <table class="w3-table">
+            <tr>
+                <th>Имя пользователя</th>
+                <th>SHA256-хэш пароля</th>
+            </tr>
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password_hash }}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

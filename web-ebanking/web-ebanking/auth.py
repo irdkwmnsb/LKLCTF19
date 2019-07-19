@@ -52,10 +52,12 @@ def get_user_by_name(username):
 
 
 def maybe_get_user_by_full_creds(username, password_hash):
+    if username is None:
+        return None
     with closing(db.cursor()) as cur:
         cur.execute(
             (
-                'SELECT username, password FROM users\n'
+                'SELECT username, password_hash FROM users\n'
                 'WHERE password_hash = ? AND username = "' + username + '"'
             ),
             [password_hash]
