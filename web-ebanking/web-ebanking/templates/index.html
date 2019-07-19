@@ -22,6 +22,7 @@
                 Регистрация
             </a>
         {% else %}
+            <a class="w3-bar-item w3-hover-indigo w3-button" href="/self">Личный кабинет</a>
             <a class="w3-bar-item w3-indigo" disabled style="cursor: default">
                 Вы {{ current_user.username }}
             </a>

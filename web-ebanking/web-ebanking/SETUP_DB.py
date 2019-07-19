@@ -19,6 +19,21 @@ INSERT INTO users VALUES
     ("admin", "{admin_passhash}"),
     ("smart_bot", "{smart_bot_passhash}");
 
+
+CREATE TABLE transactions (
+    user            VARCHAR,
+    sender          VARCHAR,
+    amount          REAL,
+    comment         VARCHAR
+);
+
+INSERT INTO transactions VALUES
+    ("user1", "9371 5018 5919 142", 3000.0, "Зарплата за полгода работы с нами"),
+    ("user1", "1111 1111 1111 111", 12.34, "Тестовый перевод"),
+    ("admin", "4914 1948 1844 743", 200.0, "Пожертвование на развитие сайта"),
+    ("admin", "1039 1854 0149 291", 13.37, "{flag}"),
+    ("smart_bot", "1111 1111 1111 111", 0.0, "На случай, если забуду пароль: {admin_pass}. admin.");
+
 COMMIT;
 '''
 
@@ -42,6 +57,8 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
                 user1_passhash = user1_passhash,
                 admin_passhash = admin_passhash,
                 smart_bot_passhash = smart_bot_passhash,
+                flag = 'LKLCTF{mock_flag}',
+                admin_pass = admin_pass,
             )
         )
         db.commit()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import auth
+import transactions
 
 import os
 from collections import namedtuple
@@ -37,15 +38,17 @@ def get_posts():
     ]
 
 
-class HomepageHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('templates/index.html', posts=get_posts())
-
+class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return auth.maybe_get_user_by_session(self.get_cookie('session_id'))
 
 
-class SignInHandler(tornado.web.RequestHandler):
+class HomepageHandler(BaseHandler):
+    def get(self):
+        self.render('templates/index.html', posts=get_posts())
+
+
+class SignInHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username', None)
         password = self.get_argument('password', '')
@@ -58,7 +61,7 @@ class SignInHandler(tornado.web.RequestHandler):
             self.redirect('/')
 
 
-class ViewUserInfoHandler(tornado.web.RequestHandler):
+class ViewUserInfoHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username', None)
         password = self.get_argument('password', '')
@@ -70,7 +73,16 @@ class ViewUserInfoHandler(tornado.web.RequestHandler):
             self.render('templates/view-user-info.html', user=user)
 
 
-class LogOutHandler(tornado.web.RequestHandler):
+class SelfHandler(BaseHandler):
+    def get(self):
+        if self.current_user is None:
+            self.redirect('/sign-in-form')
+            return
+        transactions_info = transactions.get_transactions(self.current_user)
+        self.render('templates/self.html', transactions=transactions_info)
+
+
+class LogOutHandler(BaseHandler):
     def get(self):
         session_id = self.get_cookie('session_id')
         auth.delete_session_if_exists(session_id)
@@ -78,7 +90,7 @@ class LogOutHandler(tornado.web.RequestHandler):
         self.redirect('/')
 
 
-class SimpleHandler(tornado.web.RequestHandler):
+class SimpleHandler(BaseHandler):
     def initialize(self, filename):
         self.filename = filename
 
@@ -92,6 +104,7 @@ def main():
         [
             ('/', HomepageHandler),
             ('/log-out', LogOutHandler),
+            ('/self', SelfHandler),
             ('/sign-in', SignInHandler),
             ('/view-user-info', ViewUserInfoHandler),
             ('/sign-in-form', SimpleHandler, {'filename': 'templates/sign-in-form.html'}),
