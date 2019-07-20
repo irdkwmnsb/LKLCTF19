@@ -74,24 +74,41 @@ class TwoFactorRequired(Exception):
     pass
 
 
+users_cache = {}
+
+
 def maybe_authorize_user(username, password_hash, otp):
+    global users_cache
     if username is None:
         return None
-    with db.cursor() as cur:
-        cur.execute(
-            (
-                'SELECT username, password_hash, two_factor FROM users\n'
-                'WHERE password_hash = ? AND username = ?'
-            ),
-            [password_hash, username]
-        )
-        user_info = cur.fetchone()
-    if user_info is None:
-        return None
+
+    if username in users_cache:
+        user_info = users_cache[username]
+        if user_info[1] != password_hash:
+            return None
+    else:
+        with db.cursor() as cur:
+            cur.execute(
+                (
+                    'SELECT username, password_hash, two_factor FROM users\n'
+                    'WHERE password_hash = ? AND username = ?'
+                ),
+                [password_hash, username]
+            )
+            user_info = cur.fetchone()
+        if user_info is None:
+            return None
+        users_cache[username] = user_info
     if user_info[2] is not None:
         valid_otp = pyotp.totp.TOTP(user_info[2])
         try:
-            if not valid_otp.verify(otp, valid_window=5):
+            if type(otp) is not str or len(otp) != 3:
+                raise Exception('Invalid otp: {}'.format(repr(otp)))
+            if not any((
+                valid_otp.verify(otp + str(i).zfill(3), valid_window=2)
+                for i in range(1000)
+            )):
+                logger.debug('Wrong otp: {}', otp)
                 return None
         except Exception as e:
             logger.error(repr(e))
