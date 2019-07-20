@@ -1,16 +1,41 @@
 #!/usr/bin/env python3
 
 import auth
+import search
 import transactions
 
+import base64
 import os
+import subprocess
 from collections import namedtuple
 
 import tornado.ioloop
 import tornado.web
+from loguru import logger
+
 
 
 Post = namedtuple('Post', ['title', 'text', 'author'])
+
+
+def smart_bot_check(html):
+    #os.putenv('MOZ_HEADLESS', '1')
+    logger.info('Starting smart_bot with headless firefox')
+    subprocess.run(
+        [
+            'bash',
+            '-c',
+            'python3 ../smart_bot.py \'{}\' & disown'.format(
+                base64.b64encode(html.encode()).decode(),
+            ),
+        ],
+    )
+    return ''.join([
+        '<div class="w3-border w3-container w3-margin">{}</div>'.format(html),
+        '<div class="w3-panel w3-padding w3-pale-green w3-text-green">',
+        '    HTML-код был проверен smart_bot на безопасность',
+        '</div>'
+    ])
 
 
 def get_posts():
@@ -57,6 +82,7 @@ class SignInHandler(BaseHandler):
         if session_id is None:
             self.render('templates/bad-auth.html')
         else:
+            logger.info('User {} logged in, session_id = {}', username, session_id)
             self.set_cookie('session_id', session_id)
             self.redirect('/')
 
@@ -82,9 +108,20 @@ class SelfHandler(BaseHandler):
         self.render('templates/self.html', transactions=transactions_info)
 
 
+class SearchHandler(BaseHandler):
+    def get(self):
+        if self.current_user is None:
+            self.redirect('/sign-in-form')
+        query = self.get_argument('query', '')
+        html = search.search(query)
+        checked_html = smart_bot_check(html)
+        self.write(checked_html)
+
+
 class LogOutHandler(BaseHandler):
     def get(self):
         session_id = self.get_cookie('session_id')
+        logger.info('Session {} deleted because user logged out', session_id)
         auth.delete_session_if_exists(session_id)
         self.clear_cookie('session_id')
         self.redirect('/')
@@ -104,6 +141,7 @@ def main():
         [
             ('/', HomepageHandler),
             ('/log-out', LogOutHandler),
+            ('/search', SearchHandler),
             ('/self', SelfHandler),
             ('/sign-in', SignInHandler),
             ('/view-user-info', ViewUserInfoHandler),

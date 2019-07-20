@@ -32,7 +32,9 @@
         function i_search()
         {
             let query = document.getElementById('in-service-name').value;
-            http(`/search-services?query=${encodeURIComponent(query)}`, 'GET', function(text) {
+            document.getElementById('out-search-results').innerHTML = '...';
+            http(`/search?query=${encodeURIComponent(query)}`, 'GET', function(text) {
+                console.log(text);
                 document.getElementById('out-search-results').innerHTML = text;
             });
         }
