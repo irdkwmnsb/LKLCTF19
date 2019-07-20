@@ -6,18 +6,21 @@ import os
 import secrets
 import sqlite3
 
+import pyotp
+
 
 QUERY = '''
 BEGIN;
 CREATE TABLE users (
-    username        VARCHAR,
-    password_hash   VARCHAR
+    username        VARCHAR     NOT NULL,
+    password_hash   VARCHAR     NOT NULL,
+    two_factor      VARCHAR     NULL
 );
 
 INSERT INTO users VALUES
-    ("user1", "{user1_passhash}"),
-    ("admin", "{admin_passhash}"),
-    ("smart_bot", "{smart_bot_passhash}");
+    ("user1", "{user1_passhash}", NULL),
+    ("admin", "{admin_passhash}", "{admin_2fa_key}"),
+    ("smart_bot", "{smart_bot_passhash}", NULL);
 
 
 CREATE TABLE transactions (
@@ -45,6 +48,8 @@ user1_passhash = hashlib.sha256(user1_pass).hexdigest()
 admin_passhash = hashlib.sha256(admin_pass).hexdigest()
 smart_bot_passhash = hashlib.sha256(smart_bot_pass).hexdigest()
 
+admin_2fa_key = pyotp.random_base32()
+
 try:
     os.remove('service.db')
 except FileNotFoundError:
@@ -58,7 +63,10 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
                 admin_passhash = admin_passhash,
                 smart_bot_passhash = smart_bot_passhash,
                 flag = 'LKLCTF{mock_flag}',
-                admin_pass = admin_pass,
+                admin_pass = admin_pass.decode(),
+                admin_2fa_key = admin_2fa_key,
             )
         )
         db.commit()
+
+otp = pyotp.totp.TOTP(admin_2fa_key)

@@ -6,8 +6,11 @@ import os
 import secrets
 from collections import namedtuple
 
+import pyotp
+from loguru import logger
 
-User = namedtuple('User', ['username', 'password_hash'])
+
+User = namedtuple('User', ['username', 'password_hash', 'two_factor_enabled'])
 
 
 def generate_session_id():
@@ -43,11 +46,11 @@ def delete_session_if_exists(session_id):
 
 def get_user_by_name(username):
     with db.cursor() as cur:
-        cur.execute('SELECT username, password_hash FROM users WHERE username = ?', [username])
+        cur.execute('SELECT username, password_hash, two_factor FROM users WHERE username = ?', [username])
         user_info = cur.fetchone()
     if user_info is None:
         raise Exception(f'User `{username}` not found in the database')
-    return User(username=user_info[0], password_hash=user_info[1])
+    return User(username=user_info[0], password_hash=user_info[1], two_factor_enabled=(user_info[2] is not None))
 
 
 def maybe_get_user_by_full_creds(username, password_hash):
@@ -56,7 +59,7 @@ def maybe_get_user_by_full_creds(username, password_hash):
     with db.cursor() as cur:
         cur.execute(
             (
-                'SELECT username, password_hash FROM users\n'
+                'SELECT username, password_hash, two_factor FROM users\n'
                 'WHERE password_hash = ? AND username = "' + username + '"'
             ),
             [password_hash]
@@ -64,16 +67,20 @@ def maybe_get_user_by_full_creds(username, password_hash):
         user_info = cur.fetchone()
     if user_info is None:
         return None
-    return User(username=user_info[0], password_hash=user_info[1])
+    return User(username=user_info[0], password_hash=user_info[1], two_factor_enabled=(user_info[2] is not None))
 
 
-def maybe_authorize_user(username, password_hash):
+class TwoFactorRequired(Exception):
+    pass
+
+
+def maybe_authorize_user(username, password_hash, otp):
     if username is None:
         return None
     with db.cursor() as cur:
         cur.execute(
             (
-                'SELECT username, password_hash FROM users\n'
+                'SELECT username, password_hash, two_factor FROM users\n'
                 'WHERE password_hash = ? AND username = ?'
             ),
             [password_hash, username]
@@ -81,7 +88,15 @@ def maybe_authorize_user(username, password_hash):
         user_info = cur.fetchone()
     if user_info is None:
         return None
-    user = User(username=user_info[0], password_hash=user_info[1])
+    if user_info[2] is not None:
+        valid_otp = pyotp.totp.TOTP(user_info[2])
+        try:
+            if not valid_otp.verify(otp, valid_window=5):
+                return None
+        except Exception as e:
+            logger.error(repr(e))
+            return None
+    user = User(username=user_info[0], password_hash=user_info[1], two_factor_enabled=(user_info[2] is not None))
     return create_session(user)
 
 

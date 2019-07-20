@@ -51,8 +51,8 @@ def get_posts():
             author='user1',
         ),
         Post(
-            title='Без названия',
-            text='<img src="/static/image1.png" width=200 height=200 alt="image"></img>',
+            title='Логотип банка',
+            text='<img src="/static/image1.png" height=300 alt="image"></img>',
             author='admin',
         ),
         Post(
@@ -77,8 +77,9 @@ class SignInHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username', None)
         password = self.get_argument('password', '')
+        otp = self.get_argument('otp', None)
         password_hash = auth.hash_password(password)
-        session_id = auth.maybe_authorize_user(username, password_hash)
+        session_id = auth.maybe_authorize_user(username, password_hash, otp)
         if session_id is None:
             self.render('templates/bad-auth.html')
         else:
@@ -152,6 +153,7 @@ def main():
         autoreload=False,
     )
     app.listen(port)
+    logger.info('Server started on port {}', port)
     tornado.ioloop.IOLoop.current().start()
 
 

@@ -35,10 +35,16 @@
             <tr>
                 <th>Имя пользователя</th>
                 <th>SHA256-хэш пароля</th>
+                <th>Двухфакторная аутентификация</th>
             </tr>
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.password_hash }}</td>
+                {% if user.two_factor_enabled %}
+                    <td class="w3-pale-green w3-text-green">Да</td>
+                {% else %}
+                    <td class="w3-pale-red w3-text-red">Нет</td>
+                {% end %}
             </tr>
         </table>
     </div>
