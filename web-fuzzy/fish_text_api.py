@@ -22,5 +22,5 @@ class FishText():
         return self.request("paragraph", n)
 
     def title(self, n=1):
-        return self.request("title", n)
+        return self.request("title", n).split("\n\n")
 
