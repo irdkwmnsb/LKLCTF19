@@ -102,12 +102,9 @@ def maybe_authorize_user(username, password_hash, otp):
     if user_info[2] is not None:
         valid_otp = pyotp.totp.TOTP(user_info[2])
         try:
-            if type(otp) is not str or len(otp) != 3:
+            if type(otp) is not str or len(otp) != 6:
                 raise Exception('Invalid otp: {}'.format(repr(otp)))
-            if not any((
-                valid_otp.verify(otp + str(i).zfill(3), valid_window=2)
-                for i in range(1000)
-            )):
+            if not valid_otp.verify(otp, valid_window=2):
                 logger.debug('Wrong otp: {}', otp)
                 return None
         except Exception as e:

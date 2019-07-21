@@ -19,7 +19,6 @@ Post = namedtuple('Post', ['title', 'text', 'author'])
 
 
 def smart_bot_check(html):
-    #os.putenv('MOZ_HEADLESS', '1')
     logger.info('Starting smart_bot with headless firefox')
     subprocess.run(
         [
@@ -52,7 +51,10 @@ def get_posts():
         ),
         Post(
             title='Логотип банка',
-            text='<img src="/static/image1.png" height=300 alt="image"></img>',
+            text=(
+                '<img src="/static/image1.png" height=300 alt="image"></img>'
+                '<!-- static/image-512df359789cee50e97f40d25272c0b84d94459bc8631ce32132a5942f022d77.png -->'
+            ),
             author='admin',
         ),
         Post(

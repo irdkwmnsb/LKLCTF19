@@ -2,3 +2,5 @@ venv
 *.db
 *.out
 *.log
+*.png
+!static/image1.png

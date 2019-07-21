@@ -7,6 +7,7 @@ import secrets
 import sqlite3
 
 import pyotp
+import pyqrcode
 
 
 QUERY = '''
@@ -62,7 +63,7 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
                 user1_passhash = user1_passhash,
                 admin_passhash = admin_passhash,
                 smart_bot_passhash = smart_bot_passhash,
-                flag = 'LKLCTF{mock_flag}',
+                flag = 'LKLCTF{' + secrets.token_hex() + '}',
                 admin_pass = admin_pass.decode(),
                 admin_2fa_key = admin_2fa_key,
             )
@@ -70,3 +71,6 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
         db.commit()
 
 otp = pyotp.totp.TOTP(admin_2fa_key)
+uri = otp.provisioning_uri('admin@lklctf-web-task', 'LKLCTF19')
+qr = pyqrcode.create(uri)
+qr.png('static/image-512df359789cee50e97f40d25272c0b84d94459bc8631ce32132a5942f022d77.png', scale=6)
