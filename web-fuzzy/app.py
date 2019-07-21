@@ -29,7 +29,7 @@ def error(error):
 email_regex = re.compile(r"(?P<name>\w+)@(?P<domain>\w+.+)")
 ping_percent_regex = re.compile(r"(\d+)%")
 def try_ping(domain):
-    d = subprocess.check_output(f"ping {domain} -{'cn'[os.name == 'nt']} 1")
+    d = subprocess.getoutput(f"ping {domain} -c 1 -W 2")
     r = ping_percent_regex.search(d)
     return r
 

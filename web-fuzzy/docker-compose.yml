@@ -4,5 +4,5 @@ services:
     ports:
       - "8010:80"
     volumes:
-      - ./:/var/fuzzy
+      - ./:/var/fuzzy:ro
     build: .

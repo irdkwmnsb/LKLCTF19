@@ -20,6 +20,11 @@ for i in range(1, N):
     graph[parent]['children'].append(cur_node)
     graph[cur_node]['parent'] = parent
 
+print("Если зависло, то сгенерился плохой граф (что технически невозможно). Нужно делать docker-compose up ещё раз.")
+s = nodes[-1]
+while s != nodes[0]:
+    s = graph[s]['parent']
+
 graph[nodes[-1]] = True
 
 json.dump(graph, open("graph.json", "w"))

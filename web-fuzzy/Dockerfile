@@ -1,6 +1,16 @@
 FROM python:3
 
-RUN "apt update"
-RUN "python3 -m pip install -r requirements.txt"
+WORKDIR /var/fuzzy
 
-CMD "gunicorn -c gunicorn.conf.py app:app"
+COPY flag.txt .
+COPY app.py .
+COPY templates .
+# graph.json нужно сгенерировать. python3 gen_graph.py
+COPY graph.json .
+COPY gunicorn.conf.py .
+COPY fish_text_api.py .
+COPY requirements.txt .
+
+RUN python3 -m pip install -r requirements.txt
+
+CMD gunicorn -c gunicorn.conf.py app:app
