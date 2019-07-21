@@ -158,7 +158,7 @@ def main():
             ('/view-user-info', ViewUserInfoHandler),
             ('/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'}),
         ],
-        debug=True,
+        debug=False,
         autoreload=False,
     )
     app.listen(port)
