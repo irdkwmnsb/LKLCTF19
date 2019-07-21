@@ -1,0 +1,3 @@
+libssh*
+build
+ssh_host_*_key*
