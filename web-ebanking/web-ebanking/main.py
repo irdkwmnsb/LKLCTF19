@@ -75,6 +75,11 @@ class HomepageHandler(BaseHandler):
         self.render('templates/index.html', posts=get_posts())
 
 
+class InfoHandler(BaseHandler):
+    def get(self):
+        self.redirect('/static/code-15f4996b5aad4ced417d4bd9d58e2c62.tar.gz')
+
+
 class SignInHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username', None)
@@ -144,12 +149,13 @@ def main():
     app = tornado.web.Application(
         [
             ('/', HomepageHandler),
+            ('/info', InfoHandler),
             ('/log-out', LogOutHandler),
             ('/search', SearchHandler),
             ('/self', SelfHandler),
             ('/sign-in', SignInHandler),
-            ('/view-user-info', ViewUserInfoHandler),
             ('/sign-in-form', SimpleHandler, {'filename': 'templates/sign-in-form.html'}),
+            ('/view-user-info', ViewUserInfoHandler),
             ('/static/(.*)', tornado.web.StaticFileHandler, {'path': './static'}),
         ],
         debug=True,

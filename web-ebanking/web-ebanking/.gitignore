@@ -3,4 +3,5 @@ venv
 *.out
 *.log
 *.png
+static/*.gz
 !static/image1.png

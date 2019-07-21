@@ -5,6 +5,7 @@ import hashlib
 import os
 import secrets
 import sqlite3
+import subprocess as sp
 
 import pyotp
 import pyqrcode
@@ -63,7 +64,7 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
                 user1_passhash = user1_passhash,
                 admin_passhash = admin_passhash,
                 smart_bot_passhash = smart_bot_passhash,
-                flag = 'LKLCTF{' + secrets.token_hex() + '}',
+                flag = 'LKLCTF{fe94a25123d42d01846185ffd189d2494c3e5d437ef751bb184c5a6ff5df5128}',
                 admin_pass = admin_pass.decode(),
                 admin_2fa_key = admin_2fa_key,
             )
@@ -74,3 +75,17 @@ otp = pyotp.totp.TOTP(admin_2fa_key)
 uri = otp.provisioning_uri('admin@lklctf-web-task', 'LKLCTF19')
 qr = pyqrcode.create(uri)
 qr.png('static/image-512df359789cee50e97f40d25272c0b84d94459bc8631ce32132a5942f022d77.png', scale=6)
+
+sp.run([
+    'tar',
+    '-C', '..',
+    '-czvf', 'static/code-15f4996b5aad4ced417d4bd9d58e2c62.tar.gz',
+    'smart_bot.py',
+    'web-ebanking/auth.py',
+    'web-ebanking/database.py',
+    'web-ebanking/main.py',
+    'web-ebanking/search.py',
+    'web-ebanking/transactions.py',
+    'web-ebanking/templates',
+])
+print('Done setting up')
