@@ -1,0 +1,6 @@
+version: '3'
+services:
+    web-ebanking:
+        build: .
+        ports:
+            - '8009:9999'

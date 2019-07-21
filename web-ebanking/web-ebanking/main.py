@@ -115,6 +115,7 @@ class SearchHandler(BaseHandler):
     def get(self):
         if self.current_user is None:
             self.redirect('/sign-in-form')
+            return
         query = self.get_argument('query', '')
         html = search.search(query)
         checked_html = smart_bot_check(html)
