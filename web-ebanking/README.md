@@ -60,7 +60,3 @@ TOTP-клиент (Google Authenticator, Authy, Aegis, etc.), сканируем
 - `LKLCTF{1_of_3__beb19c847ea31f34d62cbbcb7c16dd52}`
 - `LKLCTF{2_of_3__eeb328263989e16eb39bf80ed6de790c}`
 - `LKLCTF{3_of_3__436410a01b9f7ac7682b278aa9963731}`
-
-
-## TODO
-- Написать более подробное решение
