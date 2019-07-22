@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
-meson --wipe build
+rm -rf build
+meson build
 ninja -C build
 ln -svf src/build/authorize ..
 strip build/authorize
