@@ -8,12 +8,10 @@
 def hash(text):
     p = 53
     s = 0
-    x = []
     for i in range(len(text)):
         s += p**i*ord(text[i])
-        x += [p**i*ord(text[i])]
 
-    return s, x
+    return s
 ```
 
 хеш от пароля: 93862360739236268413663408
