@@ -28,7 +28,7 @@ key = input()
 
 tx *= 2
 
-if len(key) != 13:
+if len(key) != 16:
     print("lox")
     exit(0)
 
