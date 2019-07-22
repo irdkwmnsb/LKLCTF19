@@ -35,9 +35,11 @@ CREATE TABLE transactions (
 INSERT INTO transactions VALUES
     ("user1", "9371 5018 5919 142", 3000.0, "Зарплата за полгода работы с нами"),
     ("user1", "1111 1111 1111 111", 12.34, "Тестовый перевод"),
+    ("user1", "1111 1111 1111 111", 12.34, "{flag1}"),
     ("admin", "4914 1948 1844 743", 200.0, "Пожертвование на развитие сайта"),
-    ("admin", "1039 1854 0149 291", 13.37, "{flag}"),
-    ("smart_bot", "1111 1111 1111 111", 0.0, "На случай, если забуду пароль: {admin_pass}. admin.");
+    ("admin", "1039 1854 0149 291", 13.37, "{flag3}"),
+    ("smart_bot", "1111 1111 1111 111", 0.0, "На случай, если забуду пароль: {admin_pass}. admin."),
+    ("smart_bot", "1111 1111 1111 111", 12.34, "{flag2}");
 
 COMMIT;
 '''
@@ -64,7 +66,9 @@ with contextlib.closing(sqlite3.connect('service.db')) as db:
                 user1_passhash = user1_passhash,
                 admin_passhash = admin_passhash,
                 smart_bot_passhash = smart_bot_passhash,
-                flag = 'LKLCTF{fe94a25123d42d01846185ffd189d2494c3e5d437ef751bb184c5a6ff5df5128}',
+                flag1 = 'LKLCTF{1_of_3__beb19c847ea31f34d62cbbcb7c16dd52}',
+                flag2 = 'LKLCTF{2_of_3__eeb328263989e16eb39bf80ed6de790c}',
+                flag3 = 'LKLCTF{3_of_3__436410a01b9f7ac7682b278aa9963731}',
                 admin_pass = admin_pass.decode(),
                 admin_2fa_key = admin_2fa_key,
             )
