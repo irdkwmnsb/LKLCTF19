@@ -1,8 +1,7 @@
-FROM archlinux/base:latest
+FROM python:3
 
 WORKDIR /web
-RUN pacman -Syu python python-pip firefox geckodriver --needed --noconfirm
-COPY ./smart_bot.py ./
 COPY ./web-ebanking/ ./web-ebanking
+COPY ./smart_bot/smart_bot.py .
 RUN pip install -r ./web-ebanking/requirements.txt
-CMD ["bash", "-c", "echo 'nameserver 8.8.8.8' > /etc/resolv.conf && cd web-ebanking && python3 SETUP_DB.py && exec bash start.sh"]
+CMD ["bash", "-c", "cd web-ebanking && python3 SETUP_DB.py && exec bash start.sh"]

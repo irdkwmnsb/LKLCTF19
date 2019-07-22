@@ -79,6 +79,7 @@ qr.png('static/image-512df359789cee50e97f40d25272c0b84d94459bc8631ce32132a5942f0
 sp.run([
     'tar',
     '-C', '..',
+    '--dereference',
     '-czvf', 'static/code-15f4996b5aad4ced417d4bd9d58e2c62.tar.gz',
     'smart_bot.py',
     'web-ebanking/auth.py',
@@ -87,5 +88,5 @@ sp.run([
     'web-ebanking/search.py',
     'web-ebanking/transactions.py',
     'web-ebanking/templates',
-])
+], check=True)
 print('Done setting up')

@@ -8,9 +8,11 @@ import base64
 import os
 import subprocess
 from collections import namedtuple
+from threading import Thread
 
 import tornado.ioloop
 import tornado.web
+import requests as rq
 from loguru import logger
 
 
@@ -19,16 +21,13 @@ Post = namedtuple('Post', ['title', 'text', 'author'])
 
 
 def smart_bot_check(html):
-    logger.info('Starting smart_bot with headless firefox')
-    subprocess.run(
-        [
-            'bash',
-            '-c',
-            'python3 ../smart_bot.py \'{}\' & disown'.format(
-                base64.b64encode(html.encode()).decode(),
-            ),
-        ],
-    )
+    logger.info('Sending request to smart_bot')
+
+    def query():
+        rq.post(os.getenv('SMART_BOT_URL'), data=html.encode('utf-8'))
+
+    Thread(target=query, daemon=True).start()
+
     return ''.join([
         '<div class="w3-border w3-container w3-margin">{}</div>'.format(html),
         '<div class="w3-panel w3-padding w3-pale-green w3-text-green">',

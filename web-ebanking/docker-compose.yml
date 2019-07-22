@@ -4,3 +4,11 @@ services:
         build: .
         ports:
             - '8009:9999'
+    web-ebanking-smart-bot:
+        build: 'smart_bot'
+        ports:
+            - '50009:6666'
+        links:
+            - 'web-ebanking'
+        depends_on:
+            - 'web-ebanking'
