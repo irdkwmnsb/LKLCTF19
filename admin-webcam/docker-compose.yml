@@ -1,0 +1,18 @@
+version: '3'
+services:
+  rtspserver:
+    environment:
+    - RTSP_ROUTE=/tcp/av0_0
+    - RTSP_PORT=50014
+    build: rstp-server/
+    ports:
+    - "50014:50014"
+    restart: always
+  webgui:
+    build: web-server/
+    ports:
+      - "8014:80"
+    volumes:
+      - ./web-server/html:/var/www
+    restart: always
+

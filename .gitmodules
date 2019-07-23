@@ -1,0 +1,3 @@
+[submodule "admin-webcam/rstp-server/RTSPAllTheThings"]
+	path = admin-webcam/rstp-server/RTSPAllTheThings
+	url = https://github.com/Ullaakut/RTSPAllTheThings.git
