@@ -1,0 +1,6 @@
+version: '3'
+services:
+    ppc_dijkstra:
+        build: .
+        ports:
+            - '50020:9999'
