@@ -39,7 +39,7 @@ Traceback (most recent call last):
 IndexError: string index out of range
 >>>
 
-Упс, кажется, у нас некорректный байткод. Попробуем добавить несколько лишних байт, чтобы обойти IndexError:
+Упс, кажется, у нас некорректный байткод. Попробуем добавить несколько лишних байт, чтобы обойти IndexError: [хинт]
 
 >>> dis.dis(c.co_code + b'\0\0')
           0 LOAD_FAST           2 (2)
