@@ -1,5 +1,7 @@
 <?php
 
+echo '<form method="get" action=""><input name="login" placeholder="Login"/><input name="pass" type="pass" placeholder="Password"/><input type="submit"></form>';
+
 if (!isset($_GET['login']) || !isset($_GET['pass'])) {
     echo "Login and password shouldn't be empty\n";
     exit();
@@ -13,6 +15,6 @@ if ($login != 'irdkwmnsb' || $pass != 'qwerty') {
     exit();
 }
 
-echo "LKLCTF{17dkwmn56_d035n7_u53_9w3777_dud3}\n";
+echo "Access granted\nLKLCTF{17dkwmn56_d035n7_u53_9w3777_dud3}\n";
 
 ?>
