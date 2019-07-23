@@ -8,5 +8,6 @@ ADD . /src
 #install node modules
 #RUN npm install
 RUN pip3 install requests
+RUN pip3 install vk
 
 CMD ["python3", "bot.py"]
