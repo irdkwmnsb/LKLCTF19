@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>{{titles[0]}}</title>
+</head>
+<body>
+<h1>{{ titles[0] }}</h1>
+{% if parent %}
+<h3><a href="{{ url_for("page", page_n=parent) }}">{{ titles[1] }}</a><br></h3>
+{% endif %}
+<ul>
+    {% for page, title in pages|zip(titles[2:]) %}
+    <a href="{{ url_for("page", page_n=page) }}">{{ title }}</a><br>
+    {% endfor %}
+</ul>
+</body>
+</html>

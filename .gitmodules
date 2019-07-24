@@ -1,3 +1,6 @@
 [submodule "admin-webcam/rstp-server/RTSPAllTheThings"]
 	path = admin-webcam/rstp-server/RTSPAllTheThings
 	url = https://github.com/Ullaakut/RTSPAllTheThings.git
+[submodule "stego-invisible/some-repository"]
+	path = stego-invisible/some-repository
+	url = https://github.com/lklbank/some-repository.git
