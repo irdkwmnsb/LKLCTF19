@@ -1,18 +1,23 @@
-version: '3'
+version: '3.7'
 services:
-  rtspserver:
+  rtsp-server:
     environment:
     - RTSP_ROUTE=/tcp/av0_0
     - RTSP_PORT=50014
+    - INPUT=/video/flag.mp4
     build: rstp-server/
     ports:
     - "50014:50014"
     restart: always
-  webgui:
+    volumes:
+        - ./rstp-server/flag.mp4:/video/flag.mp4
+  web-server:
     build: web-server/
     ports:
       - "8014:80"
     volumes:
-      - ./web-server/html:/var/www
+      - ./web-server/html/index.html:/srv/http/index.html
+      - ./web-server/lighttpd.conf:/etc/lighttpd/lighttpd.conf
+      - ./web-server/.passwd:/etc/lighttpd/.passwd
     restart: always
 

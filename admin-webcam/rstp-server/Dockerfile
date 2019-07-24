@@ -11,7 +11,7 @@ RUN cmake ../rtspatt-src && make
 
 
 FROM ubuntu:18.04
-
+RUN mkdir /video
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libgstrtspserver-1.0-dev \
     gstreamer1.0-plugins-ugly \
