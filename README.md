@@ -46,7 +46,7 @@ https://docs.google.com/document/d/11c03qD_jrP5roYNqIiKQLulL6gv3regPOWb6lojFBXE/
 10. web-fuzzy
 11. crypto-xor
 12. crypto-rsa
-13. crypto-decypher 
+13. crypto-decipher 
 14. admin-webcam
 15. admin-vm
 16. ppc-atm
