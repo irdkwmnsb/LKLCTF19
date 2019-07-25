@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  for-hijacking:
+    ports:
+      - "8021:80"
+    restart: always
+    build: .
+
