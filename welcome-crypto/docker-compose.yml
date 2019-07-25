@@ -5,4 +5,4 @@ services:
         ports:
             - '802:80'
         volumes:
-            - ./:/ppc
+            - ./:/welcome_crypto
