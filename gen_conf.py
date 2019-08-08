@@ -4,7 +4,7 @@ task_conf = """
         proxy_pass http://localhost:{port}
     }}"""
 conf = """
-http {{
+server {{
     listen 443 ssl;
     ssl_certificate /root/ctf.sicamp.ru/cert.pem
     ssl_certificate_key /root/ctf.sicamp.ru/privkey.pem
