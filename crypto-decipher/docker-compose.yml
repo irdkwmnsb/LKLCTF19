@@ -1,7 +1,7 @@
- version: '3.7'
- services:
-    crypto-decipher:
-        ports:
-          - "50013:44500"
-        restart: always
-        build: .
+version: '3.7'
+services:
+   crypto-decipher:
+       ports:
+         - "50013:44500"
+       restart: always
+       build: .

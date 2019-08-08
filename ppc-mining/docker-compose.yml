@@ -1,6 +1,6 @@
 version: '3'
 services:
-    ppc_mining:
+    ppc-mining:
         build: .
         ports:
             - '50019:9999'
