@@ -6,8 +6,8 @@ task_conf = """
 conf = """
 server {{
     listen 443 ssl;
-    ssl_certificate /root/ctf.sicamp.ru/cert.pem
-    ssl_certificate_key /root/ctf.sicamp.ru/privkey.pem
+    ssl_certificate /root/ctf.sicamp.ru/cert.pem;
+    ssl_certificate_key /root/ctf.sicamp.ru/privkey.pem;
     server {{
         server_name ctf.sicamp.ru;
         proxy_pass http://localhost:8000
