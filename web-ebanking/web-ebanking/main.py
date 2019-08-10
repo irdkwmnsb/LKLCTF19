@@ -129,8 +129,6 @@ class SearchHandler(BaseHandler):
 class LogOutHandler(BaseHandler):
     def get(self):
         session_id = self.get_cookie('session_id')
-        logger.info('Session {} deleted because user logged out', session_id)
-        auth.delete_session_if_exists(session_id)
         self.clear_cookie('session_id')
         self.redirect('/')
 
