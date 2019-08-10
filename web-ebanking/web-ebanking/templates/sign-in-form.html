@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>LKL-Bank - вход</title>
+</head>
+
+<body>
+    <div class="w3-bar w3-blue w3-text-white" style="cursor: default">
+        <a class="w3-bar-item w3-hover-indigo w3-button" href="/">Главная</a>
+        <a class="w3-bar-item w3-indigo" disabled>Вход</a>
+        <a
+            class="w3-bar-item w3-grey"
+            disabled
+            style="cursor: not-allowed"
+            title="Регистрация пока не реализована"
+        >
+            Регистрация
+        </a>
+    </div>
+    <div class="w3-container">
+        <h1>ЛКЛ-Банк — вход в систему</h1>
+        <form action="/sign-in" method="POST">
+            <div class="w3-section">
+                <label for="in-username">Имя пользователя</label>
+                <input type="text" class="w3-input w3-border" id="in-username" name="username">
+            </div>
+            <div class="w3-section">
+                <label for="in-password">Пароль</label>
+                <input type="password" class="w3-input w3-border" id="in-password" name="password">
+            </div>
+            <div class="w3-section">
+                <label for="in-otp">Ключ двухфакторной аутентификации (если включена 2FA)</label>
+                <input type="password" class="w3-input w3-border" id="in-otp" name="otp">
+            </div>
+            <div class="w3-section">
+                <input type="submit" class="w3-button w3-blue" value="Войти">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

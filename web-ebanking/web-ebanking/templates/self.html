@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>LKL-Bank - личный кабинет</title>
+    <script>
+        'use strict';
+
+        function http(url, method, callback)
+        {
+            let ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function() {
+                try {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            callback(this.responseText);
+                        } else {
+                            throw new Error(`AJAX request returned status ${this.status}`)
+                        }
+                    }
+                } catch (e) {
+                    alert(e);
+                    throw e;
+                }
+            };
+            ajax.open(method, url, true);
+            ajax.send();
+        }
+
+        function i_search()
+        {
+            let query = document.getElementById('in-service-name').value;
+            document.getElementById('out-search-results').innerHTML = '...';
+            http(`/search?query=${encodeURIComponent(query)}`, 'GET', function(text) {
+                console.log(text);
+                document.getElementById('out-search-results').innerHTML = text;
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="w3-bar w3-blue w3-text-white" style="cursor: default">
+        <a class="w3-bar-item w3-hover-indigo w3-button" href="/">Главная</a>
+        <a class="w3-bar-item w3-indigo" disabled>Личный кабинет</a>
+        <a class="w3-bar-item w3-indigo" disabled style="cursor: default">
+            Вы {{ current_user.username }}
+        </a>
+        <a class="w3-bar-item w3-hover-indigo w3-button" href="/log-out">Выйти</a>
+    </div>
+    <div class="w3-container">
+        <h1>ЛКЛ-Банк — личный кабинет</h1>
+
+        <h3>Информация о пользователе</h3>
+        <table class="w3-table">
+            <tr>
+                <th>Имя пользователя</th>
+                <th>SHA256-хэш пароля</th>
+                <th>Двухфакторная аутентификация</th>
+            </tr>
+            <tr>
+                <td>{{ current_user.username }}</td>
+                <td>{{ current_user.password_hash }}</td>
+                {% if current_user.two_factor_enabled %}
+                    <td class="w3-pale-green w3-text-green">Да</td>
+                {% else %}
+                    <td class="w3-pale-red w3-text-red">Нет</td>
+                {% end %}
+            </tr>
+        </table>
+        <hr>
+
+        <h3>Список переводов</h3>
+        <table class="w3-table">
+            <tr>
+                <th>Счёт отправителя</th>
+                <th>Сумма</th>
+                <th>Комментарий</th>
+            </tr>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.sender }}</td>
+                    <td>{{ transaction.amount }} ₽</td>
+                    <td>{{ transaction.comment }}</td>
+                </tr>
+            {% end %}
+        </table>
+        <hr>
+
+        <h3>Поиск услуг</h3>
+        <div class="w3-row-padding">
+            <div class="w3-col s8 m10 l10">
+                <input type="text" id="in-service-name" class="w3-input w3-border">
+            </div>
+            <div class="w3-col s4 m2 l2">
+                <button class="w3-button w3-blue" onclick="i_search()">Поиск</button>
+            </div>
+        </div>
+        <div id="out-search-results">
+            Здесь будут отображаться результаты поиска
+        </div>
+    </div>
+</body>
+
+</html>

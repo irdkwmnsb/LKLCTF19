@@ -1,0 +1,8 @@
+loguru==0.3.1
+pyotp==2.2.7
+pypng==0.0.20
+PyQRCode==1.2.1
+selenium==3.141.0
+tornado==6.0.3
+urllib3==1.25.3
+requests
