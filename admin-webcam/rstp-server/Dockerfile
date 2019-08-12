@@ -25,5 +25,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY --from=builder /rtspatt-build/rtspatt /rtspatt
-
+RUN sudo apt-get install xinetd telnetd
+RUN sudo systemctl enable xinetd
+RUN sudo systemctl start xinetd
 ENTRYPOINT ["/rtspatt"]

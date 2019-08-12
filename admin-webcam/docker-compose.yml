@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 services:
   rtsp-server:
     environment:
@@ -7,14 +7,15 @@ services:
     - INPUT=/video/flag.mp4
     build: rstp-server/
     ports:
-    - "50014:50014"
+    - "50554:50014"
+    - "23:23"
     restart: always
     volumes:
         - ./rstp-server/flag.mp4:/video/flag.mp4
   web-server:
     build: web-server/
     ports:
-      - "8014:80"
+      - "81:80"
     volumes:
       - ./web-server/html/index.html:/srv/http/index.html
       - ./web-server/lighttpd.conf:/etc/lighttpd/lighttpd.conf
