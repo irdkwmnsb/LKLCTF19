@@ -1,9 +1,9 @@
 FROM python:3
 
-COPY small_app.py /app/
-COPY requirements.txt /app/
+WORKDIR /app
 
-workdir /app
+COPY small_app.py .
+COPY requirements.txt .
 
 RUN pip3 install -r requirements.txt
 
