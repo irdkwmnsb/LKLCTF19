@@ -5,7 +5,7 @@ struct bigint
     bigint(){}
     bigint& operator=(unsigned long long x)
     {
-        static_assert(WORDS >= 4);
+        static_assert(WORDS >= 4, "Ti obosralsya");
         data[0] = x;
         data[1] = x >> 16;
         data[2] = x >> 32;

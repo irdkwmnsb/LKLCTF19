@@ -6,3 +6,4 @@ services:
     volumes:
       - ./:/var/fuzzy:ro
     build: .
+    restart: always
