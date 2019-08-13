@@ -1,6 +1,6 @@
 version: '3'
 services:
-    welcome_crypto:
+    welcome-crypto:
         build: .
         ports:
             - '8002:80'
